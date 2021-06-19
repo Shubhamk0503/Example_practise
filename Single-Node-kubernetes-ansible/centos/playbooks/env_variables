@@ -8,5 +8,5 @@ packages:
 services:
 - docker
 - kubelet
-- firewalld
 
+token_file: join_token

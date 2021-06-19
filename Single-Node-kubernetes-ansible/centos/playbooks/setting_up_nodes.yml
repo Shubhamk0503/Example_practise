@@ -22,16 +22,22 @@
       gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
         https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 
-  - name: Installing Docker and firewalld
-    shell: |
-     yum install -y yum-utils device-mapper-persistent-data lvm2
-     yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-     yum install docker-ce -y --nobest
+  - name: Add Docker CE repo
+    get_url:
+     url: https://download.docker.com/linux/centos/docker-ce.repo
+     dest: /etc/yum.repos.d/docker-ce.repo
 
-  - name: Installing required packages
+  - name: Install pre-requisite packages
     yum:
-     name: "{{ packages }}"
-     state: present
+     name: "{{item}}"
+     state: latest
+    with_items:
+     - yum-utils
+     - device-mapper-persistent-data
+     - lvm2
+     - docker
+     - kubectl
+     - kubeadm
 
   - name: Starting and Enabling the required services
     service:
@@ -43,8 +49,10 @@
   - name: "Disable Firewalld service"
     shell: sed -i --follow-symlinks 's/^SELINUX=enforcing/SELINUX=disabled/' /etc/sysconfig/selinux
 
-  - name: "Disable Firewalld service"
-    shell: systemctl disabled  firewalld
-
+  - name: disable os firewall - firewalld
+    systemd: name=firewalld state=stopped enabled=no
+    register: firewalld_service_result
+    failed_when: "firewalld_service_result is failed and 'Could not find the requested service' not in firewalld_service_result.msg"
+  
   - name: Enabling Bridge Firewall Rule
     shell: "echo '1' > /proc/sys/net/bridge/bridge-nf-call-iptables"
