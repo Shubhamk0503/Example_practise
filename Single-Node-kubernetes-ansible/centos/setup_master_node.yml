@@ -1,4 +1,13 @@
 ---
 - import_playbook: playbooks/prerequisites.yml
+  when:
+  tags: "pre-check"
+
 - import_playbook: playbooks/setting_up_nodes.yml
+  when:
+  tags: "pre-installation"
+
 - import_playbook: playbooks/configure_master_node.yml
+  when:
+  tags: "cluster-deployment"
+
