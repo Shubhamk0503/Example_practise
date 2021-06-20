@@ -5,7 +5,8 @@
   - env_variables
   tasks:
   - name: Disabling Swap on all nodes
-    command: swapoff -a
+    shell: |
+      swapoff -a
     
   - name: Commenting Swap entries in /etc/fstab
     replace:
