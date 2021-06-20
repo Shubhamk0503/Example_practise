@@ -2,7 +2,7 @@
   tasks:
   - name: Ngnix deployment File
     copy:
-      src: Single-Node-kubernetes-ansible/centos/playbooks/nginx_deployment/nginx_deployment.yml
+      src: ../nginx_deployment/nginx_deployment.yml
       dest: /home/ec2-user
       force: no
       
