@@ -6,15 +6,15 @@
 [certs] Using certificateDir folder "/etc/kubernetes/pki"
 [certs] Generating "ca" certificate and key
 [certs] Generating "apiserver" certificate and key
-[certs] apiserver serving cert is signed for DNS names [gslvmjmp1 kubernetes kubernetes.default kubernetes.default.svc kubernetes.default.svc.cluster.local] and IPs [10.96.0.1 172.32.31.161]
+[certs] apiserver serving cert is signed for DNS names [ip-172-31-3-80.ap-south-1.compute.internal kubernetes kubernetes.default kubernetes.default.svc kubernetes.default.svc.cluster.local] and IPs [10.96.0.1 172.31.3.80]
 [certs] Generating "apiserver-kubelet-client" certificate and key
 [certs] Generating "front-proxy-ca" certificate and key
 [certs] Generating "front-proxy-client" certificate and key
 [certs] Generating "etcd/ca" certificate and key
 [certs] Generating "etcd/server" certificate and key
-[certs] etcd/server serving cert is signed for DNS names [gslvmjmp1 localhost] and IPs [172.32.31.161 127.0.0.1 ::1]
+[certs] etcd/server serving cert is signed for DNS names [ip-172-31-3-80.ap-south-1.compute.internal localhost] and IPs [172.31.3.80 127.0.0.1 ::1]
 [certs] Generating "etcd/peer" certificate and key
-[certs] etcd/peer serving cert is signed for DNS names [gslvmjmp1 localhost] and IPs [172.32.31.161 127.0.0.1 ::1]
+[certs] etcd/peer serving cert is signed for DNS names [ip-172-31-3-80.ap-south-1.compute.internal localhost] and IPs [172.31.3.80 127.0.0.1 ::1]
 [certs] Generating "etcd/healthcheck-client" certificate and key
 [certs] Generating "apiserver-etcd-client" certificate and key
 [certs] Generating "sa" key and public key
@@ -32,13 +32,13 @@
 [control-plane] Creating static Pod manifest for "kube-scheduler"
 [etcd] Creating static Pod manifest for local etcd in "/etc/kubernetes/manifests"
 [wait-control-plane] Waiting for the kubelet to boot up the control plane as static Pods from directory "/etc/kubernetes/manifests". This can take up to 4m0s
-[apiclient] All control plane components are healthy after 17.002090 seconds
+[apiclient] All control plane components are healthy after 10.503534 seconds
 [upload-config] Storing the configuration used in ConfigMap "kubeadm-config" in the "kube-system" Namespace
 [kubelet] Creating a ConfigMap "kubelet-config-1.21" in namespace kube-system with the configuration for the kubelets in the cluster
 [upload-certs] Skipping phase. Please see --upload-certs
-[mark-control-plane] Marking the node gslvmjmp1 as control-plane by adding the labels: [node-role.kubernetes.io/master(deprecated) node-role.kubernetes.io/control-plane node.kubernetes.io/exclude-from-external-load-balancers]
-[mark-control-plane] Marking the node gslvmjmp1 as control-plane by adding the taints [node-role.kubernetes.io/master:NoSchedule]
-[bootstrap-token] Using token: l2m8om.ypa35ifkhetklck2
+[mark-control-plane] Marking the node ip-172-31-3-80.ap-south-1.compute.internal as control-plane by adding the labels: [node-role.kubernetes.io/master(deprecated) node-role.kubernetes.io/control-plane node.kubernetes.io/exclude-from-external-load-balancers]
+[mark-control-plane] Marking the node ip-172-31-3-80.ap-south-1.compute.internal as control-plane by adding the taints [node-role.kubernetes.io/master:NoSchedule]
+[bootstrap-token] Using token: 4ynqb9.26z79r50f8vufxxj
 [bootstrap-token] Configuring bootstrap tokens, cluster-info ConfigMap, RBAC Roles
 [bootstrap-token] configured RBAC rules to allow Node Bootstrap tokens to get nodes
 [bootstrap-token] configured RBAC rules to allow Node Bootstrap tokens to post CSRs in order for nodes to get long term certificate credentials
@@ -67,5 +67,5 @@ Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
 
 Then you can join any number of worker nodes by running the following on each as root:
 
-kubeadm join 172.32.31.161:6443 --token l2m8om.ypa35ifkhetklck2 \
-	--discovery-token-ca-cert-hash sha256:e3700ca2a8f7f80d12b1b03483878f7cced29649678244c3d70d9140cb96b0af 
+kubeadm join 172.31.3.80:6443 --token 4ynqb9.26z79r50f8vufxxj \
+	--discovery-token-ca-cert-hash sha256:5672f3918dfae0032bf36dd73c510b4cc63557a54f163c5819c352d271c1fff1 
