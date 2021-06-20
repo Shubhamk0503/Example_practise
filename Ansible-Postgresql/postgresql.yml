@@ -1,21 +1,13 @@
 ---
 - hosts: all
   become: yes
+  connection: local
   tasks:
-  - name: Install dependencies for PostgreSQL
-    apt: name={{ item }} update_cache=true state=latest
-    with_items:
-    - bash
-    - openssl
-    - libssl-dev
-    - libssl-doc
 
   - name: Install PostgreSQL 
-    apt: name={{ item }} update_cache=true state=present
+    yum: name={{ item }} update_cache=true state=present
     with_items:
     - postgresql
-    - postgresql-contrib
-    - libpq-dev
     - python3-psycopg2
 
   - name: Ensure the PostgreSQL service is running
