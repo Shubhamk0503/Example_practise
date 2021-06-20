@@ -1,0 +1,71 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@2.41">
+  <actions>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@1.8.5"/>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@1.8.5">
+      <jobProperties/>
+      <triggers/>
+      <parameters/>
+      <options/>
+    </org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction>
+  </actions>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.33.1">
+      <projectUrl>https://github.com/Shubhamk0503/Example_practise.git/</projectUrl>
+      <displayName>Example_practise.git</displayName>
+    </com.coravy.hudson.plugins.github.GithubProjectProperty>
+    <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+      <triggers>
+        <com.cloudbees.jenkins.GitHubPushTrigger plugin="github@1.33.1">
+          <spec></spec>
+        </com.cloudbees.jenkins.GitHubPushTrigger>
+      </triggers>
+    </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+  </properties>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.92">
+    <script>pipeline {
+    agent any
+    stages {
+        stage(&apos;Checkout&apos;) {
+            steps {
+                // Get some code from a GitHub repository
+                git credentialsId: &apos;e646ee18-9316-4e75-a721-438adff0a367&apos;, url: &apos;https://github.com/Shubhamk0503/Example_practise.git&apos;
+            }
+        }
+
+        stage(&apos;Pre-Check&apos;) {
+            steps {
+                // Ansible Playbook
+                ansiblePlaybook becomeUser: &apos;ec2-user&apos;, credentialsId: &apos;646c9c59-dc7d-422c-bfc2-f88472801e0a&apos;, disableHostKeyChecking: true, installation: &apos;Ansible&apos;, inventory: &apos;Single-Node-kubernetes-ansible/centos/hosts&apos;, playbook: &apos;Single-Node-kubernetes-ansible/centos/setup_master_node.yml&apos;, sudoUser: null, tags: &apos;pre-check&apos;
+            }
+        }
+
+        stage(&apos;Pre-Installation&apos;) {
+            steps {
+                // Ansible Playbook
+                ansiblePlaybook becomeUser: &apos;ec2-user&apos;, credentialsId: &apos;646c9c59-dc7d-422c-bfc2-f88472801e0a&apos;, disableHostKeyChecking: true, installation: &apos;Ansible&apos;, inventory: &apos;Single-Node-kubernetes-ansible/centos/hosts&apos;, playbook: &apos;Single-Node-kubernetes-ansible/centos/setup_master_node.yml&apos;, sudoUser: null, tags: &apos;pre-installation&apos;
+            }
+        }
+
+        stage(&apos;Cluster-Deployment&apos;) {
+            steps {
+                // Ansible Playbook
+                ansiblePlaybook becomeUser: &apos;ec2-user&apos;, credentialsId: &apos;646c9c59-dc7d-422c-bfc2-f88472801e0a&apos;, disableHostKeyChecking: true, installation: &apos;Ansible&apos;, inventory: &apos;Single-Node-kubernetes-ansible/centos/hosts&apos;, playbook: &apos;Single-Node-kubernetes-ansible/centos/setup_master_node.yml&apos;, sudoUser: null, tags: &apos;cluster-deployment&apos;
+            }
+        }
+
+        stage(&apos;Nginx Deployment&apos;) {
+            steps {
+                // Ansible Playbook
+                ansiblePlaybook becomeUser: &apos;ec2-user&apos;, credentialsId: &apos;646c9c59-dc7d-422c-bfc2-f88472801e0a&apos;, disableHostKeyChecking: true, installation: &apos;Ansible&apos;, inventory: &apos;Single-Node-kubernetes-ansible/centos/hosts&apos;, playbook: &apos;Single-Node-kubernetes-ansible/centos/setup_master_node.yml&apos;, sudoUser: null, tags: &apos;nginx-deployment&apos;
+            }
+        }
+    }
+}</script>
+    <sandbox>true</sandbox>
+  </definition>
+  <triggers/>
+  <disabled>false</disabled>
+</flow-definition>
