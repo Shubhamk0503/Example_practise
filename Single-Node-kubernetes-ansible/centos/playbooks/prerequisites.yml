@@ -6,6 +6,7 @@
   tasks:
   - name: Disabling Swap on all nodes
     shell: swapoff -a
+    when: kubernetes_installed is changed
 
   - name: Commenting Swap entries in /etc/fstab
     replace:
