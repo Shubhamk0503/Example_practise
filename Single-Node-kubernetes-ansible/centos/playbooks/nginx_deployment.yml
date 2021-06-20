@@ -1,0 +1,10 @@
+- hosts: all
+  tasks:
+  - name: Ngnix deployment File
+    copy:
+      src: Single-Node-kubernetes-ansible/nginx_deployment/nginx_deployment.yml
+      dest: /home/ec2-user
+      force: no
+      
+  - name: Nginix Deployment
+    command: /usr/bin/kubectl apply -f /home/ec2-user/nginx_deployment.yml
