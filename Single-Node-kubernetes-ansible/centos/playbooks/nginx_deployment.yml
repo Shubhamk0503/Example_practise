@@ -1,10 +1,13 @@
 - hosts: all
   tasks:
-  - name: Ngnix deployment File
+  - name: copying file with playbook
+    become: true 
     copy:
-      src: ../nginx_deployment/nginx_deployment.yml
-      dest: /home/ec2-user
-      force: no
+      src:  ~/Single-Node-kubernetes-ansible/centos/playbooks/nginx_deployment.yml
+      dest: /home/ec2-user/nginx_deployment.yml
+      owner: ec2-user
+      group: ec2-user      
+      mode: 0644
       
   - name: Nginix Deployment
     command: /usr/bin/kubectl apply -f /home/ec2-user/nginx_deployment.yml
