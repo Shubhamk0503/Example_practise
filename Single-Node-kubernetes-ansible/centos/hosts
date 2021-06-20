@@ -1,3 +1,2 @@
 [kubernetes_master_nodes]
-localhost
-
+172.31.3.80
