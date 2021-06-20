@@ -11,3 +11,7 @@
   when:
   tags: "cluster-deployment"
 
+- import_playbook: playbooks/nginx_deployment.yml
+  when:
+  tags: "nginx-deployment"
+
