@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                // Get some code from a GitHub repository
+                git credentialsId: 'e646ee18-9316-4e75-a721-438adff0a367', url: 'https://github.com/Shubhamk0503/Example_practise.git'
+            }
+        }
+
+        stage('Pre-Check') {
+            steps {
+                // Ansible Playbook
+                ansiblePlaybook becomeUser: 'ec2-user', credentialsId: '646c9c59-dc7d-422c-bfc2-f88472801e0a', disableHostKeyChecking: true, installation: 'Ansible', inventory: 'Single-Node-kubernetes-ansible/centos/hosts', playbook: 'Single-Node-kubernetes-ansible/centos/setup_master_node.yml', sudoUser: null, tags: 'pre-check'
+            }
+        }
+        
+        stage('Pre-Installation') {
+            steps {
+                // Ansible Playbook
+                ansiblePlaybook becomeUser: 'ec2-user', credentialsId: '646c9c59-dc7d-422c-bfc2-f88472801e0a', disableHostKeyChecking: true, installation: 'Ansible', inventory: 'Single-Node-kubernetes-ansible/centos/hosts', playbook: 'Single-Node-kubernetes-ansible/centos/setup_master_node.yml', sudoUser: null, tags: 'pre-installation'
+            }
+        }
+        
+        stage('Cluster-Deployment') {
+            steps {
+                // Ansible Playbook
+                ansiblePlaybook becomeUser: 'ec2-user', credentialsId: '646c9c59-dc7d-422c-bfc2-f88472801e0a', disableHostKeyChecking: true, installation: 'Ansible', inventory: 'Single-Node-kubernetes-ansible/centos/hosts', playbook: 'Single-Node-kubernetes-ansible/centos/setup_master_node.yml', sudoUser: null, tags: 'cluster-deployment'
+            }
+        }
+        
+        stage('Nginx Deployment') {
+            steps {
+                // Ansible Playbook
+                ansiblePlaybook becomeUser: 'ec2-user', credentialsId: '646c9c59-dc7d-422c-bfc2-f88472801e0a', disableHostKeyChecking: true, installation: 'Ansible', inventory: 'Single-Node-kubernetes-ansible/centos/hosts', playbook: 'Single-Node-kubernetes-ansible/centos/setup_master_node.yml', sudoUser: null, tags: 'nginx-deployment'
+            }
+        }
+    }
+}
