@@ -1,0 +1,31 @@
+pipeline { 
+    agent any
+    tools {
+        maven "local_maven"
+    }
+    //def pomfilepath= pom.xml http://172.32.31.208:7777/svn/lab/Training/sonar_job/pom.xml
+        stages {
+            stage("Checkout") {
+                steps {
+                 //svn 'http://172.32.31.208:7777/svn/lab/Training/sonar_job/'
+                 checkout([$class: 'SubversionSCM', additionalCredentials: [], excludedCommitMessages: '', excludedRegions: '', excludedRevprop: '', excludedUsers: '', filterChangelog: false, ignoreDirPropChanges: false, includedRegions: '', locations: [[cancelProcessOnExternalsFail: true, credentialsId: '6f1ed471-5f6e-4017-bee0-63c54f3d0abc', depthOption: 'infinity', ignoreExternalsOption: true, local: '.', remote: 'http://172.32.31.208:7777/svn/lab/Training/sonar_job']], quietOperation: true, workspaceUpdater: [$class: 'UpdateUpdater']])
+            }
+         }
+            stage("Build") {
+                steps {
+                sh "mvn clean install"
+            }
+        }
+        stage('SonarQube analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                  sh "mvn sonar:sonar \
+				  -Dsonar.projectKey=Deepanshi \
+				  -Dsonar.projectName=Sonar_Job \
+                  -Dsonar.host.url=http://172.32.31.207:9000 \
+                  -Dsonar.login=d9821806aa06c603c80b5bf72a66c2f7aa59c21d"
+                }
+            }
+        }
+	}
+}
